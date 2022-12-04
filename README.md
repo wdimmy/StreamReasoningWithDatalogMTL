@@ -36,7 +36,7 @@ and tested it experimentally. The obtained results support the feasibility of ou
 
 <span id="example"/>
 
-#### A Stream Reasoning Example 
+#### 2. A Stream Reasoning Example 
 
 Consider a network where nodes are monitor- ing different signals. A node receiving readings for a signal with  sufficiently 
 high frequency flags the signal by sending a message to all neighbouring nodes in the network, which will 
@@ -201,7 +201,7 @@ client through a WebSocket. The server is also acting as a web server to control
 Given the generated  static temporal data, we mock the stream reasoning scenarios by writing a script to
 read the static temporal data and then output a set of facts having the same punctual point each time. 
 
-**Using MeTeoR to do the streaming reasoning**
+##### 4.1 Using MeTeoR to do the streaming reasoning 
 
 ```shell
 python meteor_mock.py --datapath ./demo/traffic1.txt --rulepath ./programs/efficient_shortbreak.txt
@@ -215,7 +215,7 @@ window_size: a integer list recording the window_size at each rule application i
 window_size_raw: a integer list recording the window_size at each rule application iteration before coalescing
 ```
 --------------------------------------------------------------------------------
-**Using MeTeoR_Str to do the streaming reasoning**
+##### 4.2 Using MeTeoR_Str to do the streaming reasoning
 
 ```shell
 python sr_mock.py --datapath ./demo/traffic1.txt --rulepath ./programs/efficient_shortbreak.txt
