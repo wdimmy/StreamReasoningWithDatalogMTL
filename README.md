@@ -12,7 +12,7 @@ This repository contains code and other related resources of our paper "Stream R
       * <a href="#downloadlubm">3.1.1 Download LUBM generator</a>
       * <a href="#datalog">3.1.2 Obtain datalog facts</a>
       * <a href="#datalogmtl">3.1.3 Add punctual intervals</a>
-    * <a href='#hackathon'>3.2. Hackathon Benchmark</a>
+    * <a href='#hackathon'>3.2 Hackathon Benchmark</a>
      
 * <a href='#mock'>4. Mocking stream reasoning scenarios </a>
 
@@ -57,15 +57,15 @@ of length at least 3.
 
 <span id="data"/>
 
-#### 2. Automatic Temporal Data Generation </a>
+#### 3. Automatic Temporal Data Generation </a>
 
 <span id="lubm"/>
 
-##### 2.1 Lehigh University Benchmark (LUBM)
+##### 3.1 Lehigh University Benchmark (LUBM)
 
 <span id="downloadlubm"/>
 
-######  2.1.1 Download the LUBM data generator
+######  3.1.1 Download the LUBM data generator
 
 You can download the data generator (UBA) from **SWAT Projects - Lehigh University Benchmark (LUBM)** [website](http://swat.cse.lehigh.edu/projects/lubm/). In particular,
 we used [UBA1.7](http://swat.cse.lehigh.edu/projects/lubm/uba1.7.zip).
@@ -78,7 +78,7 @@ export CLASSPATH="$CLASSPATH:your package path"
 
 <span id="datalog"/>
 
-###### 2.1.2 Generate the owl files
+###### 3.1.2 Generate the owl files
 ```
 ==================
 USAGES
@@ -159,7 +159,7 @@ The number of triplets:8604
 ```
 <span id="datalogmtl"/>
 
-###### Add punctual intervals
+###### 3.1.3 Add punctual intervals
 
 Up to now, we only construct the atemporal data, so the final step will be adding temporal information
 (intervals) to these atemporal data. In the stream reasoning scenario, we consider punctual intervals, namely,
@@ -184,7 +184,7 @@ name(ID18,ID9)@[22,22]
 ```
 <span id="hackathon"/>
 
-##### Hackathon Benchmark
+##### 3.2 Hackathon Benchmark
 
 The Hackathon Challenge, organised at the [Stream Reasoning Workshop 2021](https://streamreasoning.org/events/srw2021), provides a stream generator 
 together with several reasoning tasks. We considered the scenario in the challenge where input streams 
