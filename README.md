@@ -204,7 +204,7 @@ read the static temporal data and then output a set of facts having the same pun
 ##### 4.1 Using MeTeoR to do the streaming reasoning 
 
 ```shell
-python meteor_mock.py --datapath ./demo/traffic1.txt --rulepath ./programs/efficient_shortbreak.txt
+python meteor_mock.py --datapath ./demo/traffic1.txt --rulepath ./demo/efficient_shortbreak.txt
 --datasetname traffic_shortbreak_small --target ShortBreak
 ```
 Some intermediate results will be saved in ./results/meteor_traffic_shortbreak_small.pkl, which is a dictionary containing
@@ -218,7 +218,7 @@ window_size_raw: a integer list recording the window_size at each rule applicati
 ##### 4.2 Using MeTeoR_Str to do the streaming reasoning
 
 ```shell
-python sr_mock.py --datapath ./demo/traffic1.txt --rulepath ./programs/efficient_shortbreak.txt
+python sr_mock.py --datapath ./demo/traffic1.txt --rulepath ./demo/efficient_shortbreak.txt
 --datasetname traffic_shortbreak_small --target ShortBreak
 ```
 Some intermediate results will be saved in ./results/sr_traffic_shortbreak_small.pkl, which is a dictionary containing the
