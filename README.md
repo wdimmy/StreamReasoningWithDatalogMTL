@@ -217,7 +217,7 @@ read the static temporal data and then output a set of facts having the same pun
 ##### 4.1 Using MeTeoR_Str to do the streaming reasoning ()
 
 ```shell
-python sr_mock.py --datapath ./demo/S2.txt --rulepath ./demo/short_step.txt --target ShortStop
+python meteor_str_stream_reasoning.py --datapath demo/S1.txt --rulepath demo/short_stop.txt --target ShortStop
 ```
 A log file (meteor_str_mock.log) will be generated in the current directory.
 
@@ -226,8 +226,7 @@ A log file (meteor_str_mock.log) will be generated in the current directory.
 ##### 4.2 Using MeTeoR to do the streaming reasoning 
 
 ```shell
-python meteor_mock.py --datapath ./demo/S1.txt --rulepath ./demo/short_stop.txt
---target ShortStop
+ python meteor_stream_reasoning.py --datapath demo/S1.txt --rulepath demo/short_stop.txt --target ShortStop
 ```
 A log file (meteor_mock.log) will be generated in the current directory.
 
