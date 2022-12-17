@@ -147,111 +147,65 @@ def get_initial_ruler_intervals(points, left_border, right_border, gcd):
 
     points = list(points)
     points.sort()
-    #
-    # left_end_point = points[0]
-    # right_end_point = points[0] -gcd
-    #
-    # pattern = set()
-    # pattern.add(left_end_point)
-    # pattern.add(right_end_point)
-    # # the pattern's range [x, x+gcd], all other points will fall into this range
-    # for item in points:
-    #     a, b = divmod(item-left_end_point, gcd)
-    #     if a == 0:
-    #         continue
-    #     else:
-    #         pattern.add(b)
-    #
-    # pattern = list(pattern)
-    # pattern.sort()
-    #
-    #
-    # left_initial_intervals = []
-    # for i in range(len(pattern)):
-    #     if i == len(pattern) - 1:
-    #         left_initial_intervals.append(
-    #             Interval(pattern[i], pattern[i], False, False))
-    #     else:
-    #         left_initial_intervals.append(
-    #             Interval(pattern[i], pattern[i], False, False))
-    #         left_initial_intervals.append(
-    #             Interval(pattern[i], pattern[i + 1], True, True))
-    #
-    #
-    # left_end_point = points[-1]-gcd
-    # right_end_point = points[-1]
-    #
-    # pattern = set()
-    # pattern.add(left_end_point)
-    # pattern.add(right_end_point)
-    # # the pattern's range [x, x+gcd], all other points will fall into this range
-    # for item in points:
-    #     a, b = divmod(right_end_point - item, gcd)
-    #     if a == 0:
-    #         continue
-    #     else:
-    #         pattern.add(left_end_point + b)
-    #
-    # pattern = list(pattern)
-    # pattern.sort()
-    #
-    # right_initial_intervals = []
-    # for i in range(len(pattern)):
-    #     if i == len(pattern) - 1:
-    #         right_initial_intervals.append(
-    #             Interval(pattern[i], pattern[i], False, False))
-    #     else:
-    #         right_initial_intervals.append(
-    #             Interval(pattern[i], pattern[i], False, False))
-    #         right_initial_intervals.append(
-    #             Interval(pattern[i], pattern[i + 1], True, True))
-    #
-    # return left_initial_intervals, right_initial_intervals
-    #
-    #
-    #
-    initial_ruler_intervals = set()
-    for point in points:
-        left = point
-        while left_border <= left:
-            if left_border <= left <= right_border:
-                initial_ruler_intervals.add(left)
-            left -= gcd
 
-        right = point + gcd
-        while right <= right_border:
-            if left_border <= right <= right_border:
-                initial_ruler_intervals.add(right)
-            right += gcd
-    initial_ruler_intervals = list(initial_ruler_intervals)
-    initial_ruler_intervals.sort()
+    left_end_point = points[0]
+    right_end_point = points[0] - gcd
 
-    windows_interval_len = []  # from left to right
-    windows_interval_left_right_values = []
-    for i in range(len(initial_ruler_intervals)):
-        if i == len(initial_ruler_intervals) - 1:
-            windows_interval_len.append(0)
-            windows_interval_left_right_values.append(Interval(initial_ruler_intervals[i], initial_ruler_intervals[i], False, False))
-
+    pattern = set()
+    pattern.add(left_end_point)
+    pattern.add(right_end_point)
+    # the pattern's range [x, x+gcd], all other points will fall into this range
+    for item in points:
+        a, b = divmod(item-left_end_point, gcd)
+        if b == 0:
+            continue
         else:
-            windows_interval_len.append(0)
-            windows_interval_left_right_values.append(
-                Interval(initial_ruler_intervals[i], initial_ruler_intervals[i], False, False))
-            windows_interval_len.append(initial_ruler_intervals[i + 1] - initial_ruler_intervals[i])
-            windows_interval_left_right_values.append(
-                Interval(initial_ruler_intervals[i], initial_ruler_intervals[i+1], True, True))
+            pattern.add(b)
 
-    left_interval = Interval(points[0], points[0], False, False)
-    left_index = windows_interval_left_right_values.index(left_interval)
+    pattern = list(pattern)
+    pattern.sort()
+    left_initial_intervals = []
+    for i in range(len(pattern)):
+        if i == len(pattern) - 1:
+            left_initial_intervals.append(
+                Interval(pattern[i], pattern[i], False, False))
+        else:
+            left_initial_intervals.append(
+                Interval(pattern[i], pattern[i], False, False))
+            left_initial_intervals.append(
+                Interval(pattern[i], pattern[i + 1], True, True))
 
-    right_interval = Interval(points[-1], points[-1], False, False)
-    right_index = windows_interval_left_right_values.index(right_interval)
+    left_end_point = points[-1]
+    right_end_point = points[-1] + gcd
 
-    return windows_interval_left_right_values[:left_index+1], windows_interval_left_right_values[right_index:]
+    pattern = set()
+    pattern.add(left_end_point)
+    pattern.add(right_end_point)
+    # the pattern's range [x, x+gcd], all other points will fall into this range
+    for item in points:
+        a, b = divmod(item - left_end_point, gcd)
+        if b == 0:
+            continue
+        else:
+            pattern.add(b)
 
+    pattern = list(pattern)
+    pattern.sort()
+    pattern_len = [pattern[i] - pattern[i - 1] for i in range(1, len(pattern))]
+    pattern_num = len(pattern_len)
 
-    #return windows_interval_len, windows_interval_left_right_values
+    right_initial_intervals = []
+    for i in range(len(pattern)):
+        if i == len(pattern) - 1:
+            right_initial_intervals.append(
+                Interval(pattern[i], pattern[i], False, False))
+        else:
+            right_initial_intervals.append(
+                Interval(pattern[i], pattern[i], False, False))
+            right_initial_intervals.append(
+                Interval(pattern[i], pattern[i + 1], True, True))
 
+    return left_initial_intervals, right_initial_intervals, pattern_num, pattern_len
 
 
 def get_dataset_points_x(D, min_x_flag=False):

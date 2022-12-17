@@ -1,25 +1,6 @@
 import decimal
 
 
-def coalescing(old_intervals):
-    if len(old_intervals) == 0:
-        return old_intervals
-    new_intervals = []
-    old_intervals = sorted(old_intervals, key=lambda t: (t.left_value, t.left_open))
-    i = 1
-    mover = old_intervals[0]
-    while i <= len(old_intervals)-1:
-        tmp_interval = Interval.union(mover, old_intervals[i])
-        if tmp_interval is None:
-            # no intersection
-            new_intervals.append(mover)
-            mover = old_intervals[i]
-        else:
-            mover = tmp_interval
-        i += 1
-    new_intervals.append(mover)
-    return new_intervals
-
 class Interval:
     def __init__(self, left_value, right_value, left_open, right_open):
         """
@@ -31,13 +12,10 @@ class Interval:
             left_open (boolean):  True denotes open and vice versa.
             right_open (boolean): True denotes open and vice versa.
         """
-        if left_value == right_value and (left_open is False or right_open is False):
-            self.left_open, self.right_open = False, False
-        else:
-            self.left_open = left_open
-            self.right_open = right_open
         self.left_value = left_value
         self.right_value = right_value
+        self.left_open = left_open
+        self.right_open = right_open
 
     @staticmethod
     def list_union(intervals1, intervals2):
@@ -159,6 +137,7 @@ class Interval:
         res.append(interval_src)
         return res
 
+
     @staticmethod
     def diff_list(t1_list, t2_list):
         """
@@ -170,38 +149,28 @@ class Interval:
         Returns: a list of Intervals
 
         """
-        t1_list = coalescing(t1_list)
-        t2_list = coalescing(t2_list)
         if len(t2_list) == 0:
             return t1_list
 
         res = []
         for interval1 in t1_list:
-            mover = interval1
             for interval2 in t2_list:
-                if mover.left_value == interval2.left_value and mover.left_open is False and interval2.left_open:
-                    res.append(Interval(mover.left_value, mover.left_value, False, False))
-                elif mover.left_value < interval2.left_value:
-                    if mover.right_value < interval2.left_value:
-                        res.append(Interval(mover.left_value, mover.right_value, mover.left_open, mover.right_open))
-                        break
-                    else:
-                        res.append(Interval(mover.left_value, interval2.left_value, mover.left_open, not interval2.left_open))
-                if Interval.inclusion(mover, interval2):
+                mover = interval1
+                if Interval.inclusion(interval1, interval2):
                     mover = None
                     break
-                elif Interval.intersection(mover, interval2) is None:
+                elif Interval.intersection(interval1, interval2) is None:
                     continue
                 else:
-                    intersect = Interval.intersection(mover, interval2)
-                    if intersect.right_value == mover.right_value and mover.right_open:
-                        mover = None
+                    intersect = Interval.intersection(interval1, interval2)
+                    if interval1.left_value >= intersect.left_value:
+                        mover = Interval(intersect.right_value, interval1.right_value, not intersect.right_open, interval1.right_open)
                     else:
-                        mover = Interval(intersect.right_value, mover.right_value, not intersect.right_open, mover.right_open)
-
+                        left = Interval(interval1.left_value, intersect.left_value, interval1.left_value, not intersect.left_open)
+                        res.append(left)
+                        mover = Interval(intersect.right_value, interval1.right_value, not intersect.right_open, interval1.right_open)
             if mover is not None:
                   res.append(mover)
-        res = coalescing(res)
         return res
 
 
@@ -505,16 +474,14 @@ if __name__ == "__main__":
     # a2 = Interval(2.5, 4, True, False)
     # print(Interval.intersection(a1, a2))
     # exit()
+    a1 = Interval(3, 4, True, False)
+    b1 = Interval(3, 3, False, False)
+    c = Interval.intersection(a1, b1)
 
-    # D: ['[16.0,220.0)', '(220.0,221.0)']
-    # new: ['(221.0,222.0)', '[17.0,221.0)']
-
-    a = [Interval(221.0, 222, True, True), Interval(17, 221, False, True)]
-    b = [Interval(16, 220, False, True), Interval(220, 221, True, True)]
+    a = [Interval(0, 0, False, False), Interval(2.0, 5, False, False)]
+    b = [Interval(0.0, 0.0, False, False), Interval(2.0, 3.0, False, False)]
     c = [Interval(0.0, 0.0, False, False), Interval(2.0, 3.0, False, False)]
-    d = Interval.diff_list(a, b)
-    print([str(item) for item in d])
-
+    print(Interval.list_inclusion(c, b))
     exit()
 
     c = Interval.diff_list(b, a)
