@@ -1,0 +1,33 @@
+Min_value=1, Max_value=200 in the given dataset
+============Stream Reasoning Starts (MeTeoR-Str) ============
+
+Streams in at the time point 1
+Number of streams (in): 53
+Stream out at the time point 1
+Number of streams (out) 0
+Streams in at the time point 2
+Number of streams (in): 61
+Stream out at the time point 2
+Number of streams (out) 0
+Streams in at the time point 3
+Number of streams (in): 69
+Stream out at the time point 3
+Number of streams (out) 4
+Streams in at the time point 4
+Number of streams (in): 81
+Stream out at the time point 4
+Number of streams (out) 2
+Streams in at the time point 5
+Number of streams (in): 93
+Stream out at the time point 5
+Number of streams (out) 6
+Streams in at the time point 6
+Number of streams (in): 109
+Stream out at the time point 6
+Number of streams (out) 4
+Streams in at the time point 7
+Number of streams (in): 121
+Stream out at the time point 7
+Number of streams (out) 4
+Streams in at the time point 8
+Number of streams (in): 129

@@ -40,16 +40,17 @@ with open(args.rulepath) as file:
                 predicates.add(literal.get_predicate())
 
 with open(args.datapath) as file:
-    raw_data = []
     lines = file.readlines()
-    if len(lines) > args.limit:
-        for line in lines:
-            for predicate in predicates:
-                if line.startswith(predicate):
-                    raw_data.append(line)
-                    break
-    else:
-        raw_data = lines[:]
+    #raw_data = []
+    # if len(lines) > args.limit:
+    #     for line in lines:
+    #         for predicate in predicates:
+    #             if line.startswith(predicate):
+    #                 raw_data.append(line)
+    #                 break
+    # else:
+    #     raw_data = lines[:]
+    raw_data = lines[:]
     D = load_dataset(raw_data)
     for predicate in D:
         for entity in D[predicate]:
